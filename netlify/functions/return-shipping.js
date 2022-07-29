@@ -27,42 +27,63 @@ const handler = async function (event, context) {
     })
     console.log(reponse_output);
 
-    if (country == "VN"){
+    
+   
+    if (currency == "vnd" ){
+        if (country == "VN"){
         URljson = {
             rates: [{
                 cost: 30000,
                 description: `Local Shipping`
                 }]
             }
-    }
-    else {
-        if (currency == "vnd" ){
+        }
+        else {
             URljson = {
                 rates: [{
                     cost: reponse_output.Message[0].Rates,
                     description: `International shipping`
                     }]
                 }
-        } 
-        else if (currency == "cny"){
-            var cny = Math.round((Number(reponse_output.Message[0].Rates))/3500);
-            URljson = {
-                rates: [{
-                    cost: cny,
-                    description: `International shipping`
-                    }]
-                }
+        }
+    } 
+    else if (currency == "cny"){
+        if (country == "VN"){
+        URljson = {
+            rates: [{
+                cost: 30000,
+                description: `Local Shipping`
+                }]
+            }
         }
         else {
-            var usd = Math.round((Number(reponse_output.Message[0].Rates))/22000);
-            URljson = {
-                rates: [{
-                    cost: usd,
-                    description: `International shipping | Giao hàng Quốc Tế`
-                    }]
-                }
+        var cny = Math.round((Number(reponse_output.Message[0].Rates))/3500);
+        URljson = {
+            rates: [{
+                cost: cny,
+                description: `International shipping`
+                }]
+            }
         }
-
+    }
+    else {
+        if (country == "VN"){
+        URljson = {
+            rates: [{
+                cost: 30000,
+                description: `Local Shipping`
+                }]
+            }
+        }
+        else {
+        var usd = Math.round((Number(reponse_output.Message[0].Rates))/22000);
+        URljson = {
+            rates: [{
+                cost: usd,
+                description: `International shipping | Giao hàng Quốc Tế`
+                }]
+            }
+        }
     }
 
 
