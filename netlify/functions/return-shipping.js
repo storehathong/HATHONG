@@ -31,12 +31,12 @@ const handler = async function (event, context) {
    
     if (currency == "vnd" ){
         if (country == "VN"){
-        URljson = {
-            rates: [{
-                cost: 30000,
-                description: `Local Shipping`
-                }]
-            }
+            URljson = {
+                rates: [{
+                    cost: 30000,
+                    description: `Local Shipping`
+                    }]
+                }
         }
         else {
             URljson = {
@@ -51,7 +51,7 @@ const handler = async function (event, context) {
         if (country == "VN"){
         URljson = {
             rates: [{
-                cost: 30000,
+                cost: Math.round(30000/3500),
                 description: `Local Shipping`
                 }]
             }
@@ -66,11 +66,11 @@ const handler = async function (event, context) {
             }
         }
     }
-    else {
+    else if (currency == "usd"){
         if (country == "VN"){
         URljson = {
             rates: [{
-                cost: 30000,
+                cost: Math.round(30000/22000),
                 description: `Local Shipping`
                 }]
             }
@@ -80,7 +80,7 @@ const handler = async function (event, context) {
         URljson = {
             rates: [{
                 cost: usd,
-                description: `International shipping | Giao hàng Quốc Tế`
+                description: `International shipping`
                 }]
             }
         }
