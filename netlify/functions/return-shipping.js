@@ -6,96 +6,101 @@
 var URljson = {};
 let reponse_output;
 const handler = async function (event, context) {
-    const axios = require('axios').default;
-    const request = JSON.parse(event.body);
-    console.log(request);
-    var currency = request.content.currency;
-    var country = request.content.shippingAddressCountry;
-    var weight = request.content.totalWeight;
-    if (weight == "0"){
-        weight = 1000;
-    }
-    const response = await axios.get(`https://api.myems.vn/EmsDosmetic?CountryCode=${country}&FromProvince=0&FromDistrict=0&ToProvince=0&ToDistrict=0&weight=${weight}&totalAmount=0&Istype=2&language=0`)
+  const axios = require("axios").default;
+  const request = JSON.parse(event.body);
+  console.log(request);
+  var currency = request.content.currency;
+  var country = request.content.shippingAddressCountry;
+  var weight = request.content.totalWeight;
+  if (weight == "0") {
+    weight = 1000;
+  }
+  const response = await axios
+    .get(
+      `https://api.myems.vn/EmsDosmetic?CountryCode=${country}&FromProvince=0&FromDistrict=0&ToProvince=0&ToDistrict=0&weight=${weight}&totalAmount=0&Istype=2&language=0`
+    )
     .then(function (response) {
-        // handle success
-        console.log(response.data);
-        reponse_output = response.data;
+      // handle success
+      // console.log(response.data);
+      reponse_output = response.data;
     })
     .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-    console.log(reponse_output);
+      // handle error
+      console.log(error);
+    });
+  // console.log(reponse_output);
 
-    
-   
-    if (currency == "vnd" ){
-        if (country == "VN"){
-            URljson = {
-                rates: [{
-                    cost: 30000,
-                    description: `Local Shipping`
-                    }]
-                }
-        }
-        else {
-            URljson = {
-                rates: [{
-                    cost: reponse_output.Message[0].Rates,
-                    description: `International shipping`
-                    }]
-                }
-        }
-    } 
-    else if (currency == "cny"){
-        if (country == "VN"){
-        URljson = {
-            rates: [{
-                cost: Math.round(30000/3500),
-                description: `Local Shipping`
-                }]
-            }
-        }
-        else {
-        var cny = Math.round((Number(reponse_output.Message[0].Rates))/3500);
-        URljson = {
-            rates: [{
-                cost: cny,
-                description: `International shipping`
-                }]
-            }
-        }
+  if (currency == "vnd") {
+    if (country == "VN") {
+      URljson = {
+        rates: [
+          {
+            cost: 30000,
+            description: `Local Shipping`,
+          },
+        ],
+      };
+    } else {
+      URljson = {
+        rates: [
+          {
+            cost: reponse_output.Message[0].Rates,
+            description: `International shipping`,
+          },
+        ],
+      };
     }
-    else if (currency == "usd"){
-        if (country == "VN"){
-        URljson = {
-            rates: [{
-                cost: Math.round(30000/22000),
-                description: `Local Shipping`
-                }]
-            }
-        }
-        else {
-        var usd = Math.round((Number(reponse_output.Message[0].Rates))/22000);
-        URljson = {
-            rates: [{
-                cost: usd,
-                description: `International shipping`
-                }]
-            }
-        }
+  } else if (currency == "cny") {
+    if (country == "VN") {
+      URljson = {
+        rates: [
+          {
+            cost: Math.round(30000 / 3500),
+            description: `Local Shipping`,
+          },
+        ],
+      };
+    } else {
+      var cny = Math.round(Number(reponse_output.Message[0].Rates) / 3500);
+      URljson = {
+        rates: [
+          {
+            cost: cny,
+            description: `International shipping`,
+          },
+        ],
+      };
     }
-
-
-
+  } else if (currency == "usd") {
+    if (country == "VN") {
+      URljson = {
+        rates: [
+          {
+            cost: Math.round(30000 / 22000),
+            description: `Local Shipping`,
+          },
+        ],
+      };
+    } else {
+      var usd = Math.round(Number(reponse_output.Message[0].Rates) / 22000);
+      URljson = {
+        rates: [
+          {
+            cost: usd,
+            description: `International shipping`,
+          },
+        ],
+      };
+    }
+  }
 
   return {
     statusCode: 200,
     headers: {
-        'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(URljson),
-  }
-}
+  };
+};
 
-module.exports = { handler }
+module.exports = { handler };
