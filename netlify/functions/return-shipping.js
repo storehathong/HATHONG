@@ -44,7 +44,7 @@ const handler = async function (event, context) {
       URljson = {
         rates: [
           {
-            cost: reponse_output.Message[0].Rates,
+            cost: 2000000,
             description: `International shipping`,
           },
         ],
@@ -61,7 +61,7 @@ const handler = async function (event, context) {
         ],
       };
     } else {
-      var cny = Math.round(Number(reponse_output.Message[0].Rates) / 3500);
+      var cny = Math.round(2000000 / 3500);
       URljson = {
         rates: [
           {
@@ -82,7 +82,7 @@ const handler = async function (event, context) {
         ],
       };
     } else {
-      var usd = Math.round(Number(reponse_output.Message[0].Rates) / 22000);
+      var usd = Math.round(2000000 / 22000);
       URljson = {
         rates: [
           {
