@@ -15,20 +15,20 @@ const handler = async function (event, context) {
   if (weight == "0") {
     weight = 1000;
   }
-  const response = await axios
-    .get(
-      `https://api.myems.vn/EmsDosmetic?CountryCode=${country}&FromProvince=0&FromDistrict=0&ToProvince=0&ToDistrict=0&weight=${weight}&totalAmount=0&Istype=2&language=0`
-    )
-    .then(function (response) {
-      // handle success
-      // console.log(response.data);
-      reponse_output = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-  // console.log(reponse_output);
+  //   const response = await axios
+  //     .get(
+  //       `https://api.myems.vn/EmsDosmetic?CountryCode=${country}&FromProvince=0&FromDistrict=0&ToProvince=0&ToDistrict=0&weight=${weight}&totalAmount=0&Istype=2&language=0`
+  //     )
+  //     .then(function (response) {
+  //       // handle success
+  //       // console.log(response.data);
+  //       reponse_output = response.data;
+  //     })
+  //     .catch(function (error) {
+  //       // handle error
+  //       console.log(error);
+  //     });
+  //   console.log(reponse_output);
 
   if (currency == "vnd") {
     if (country == "VN") {
