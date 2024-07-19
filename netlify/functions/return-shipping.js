@@ -10,7 +10,7 @@ const handler = async function (event, context) {
   const request = JSON.parse(event.body);
   console.log(request);
   var currency = request.content.currency;
-  var country = request.content.shippingAddressCountry;
+  var country = request.content.shippingAddress.country;
   var weight = request.content.totalWeight;
   if (weight == "0") {
     weight = 1000;
